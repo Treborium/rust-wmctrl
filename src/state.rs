@@ -48,7 +48,6 @@ impl fmt::Display for Property {
     }
 }
 
-
 pub struct State {
     action: Action,
     property: Property,
