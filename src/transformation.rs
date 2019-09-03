@@ -12,10 +12,6 @@ impl Transformation {
     pub fn new(x: u16, y: u16, width: u16, height: u16) -> Transformation {
         Transformation { gravity: 0, x, y, width, height }
     }
-
-    pub fn set_gravity(&mut self, gravity: u16) {
-        self.gravity = gravity;
-    }
 }
 
 impl fmt::Display for Transformation {
