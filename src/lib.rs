@@ -5,8 +5,13 @@ pub fn list_windows() -> std::process::Output {
 }
 
 /// This equals the -m flag
-pub fn show_information_about_wm() -> std::process::Output {
+pub fn show_wm_information() -> std::process::Output {
     wmctrl("-m")
+}
+
+/// This equald the -d flag
+pub fn list_desktops() -> std::process::Output {
+    wmctrl("-d")
 }
 
 fn wmctrl(args: &str) -> std::process::Output {
