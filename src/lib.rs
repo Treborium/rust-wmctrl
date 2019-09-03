@@ -2,14 +2,39 @@ use std::process::Command;
 
 pub mod transformation;
 pub mod state;
+pub mod window;
 
 
 pub fn help() -> std::process::Output {
     wmctrl("-h")
 }
 
-pub fn list_windows() -> std::process::Output {
-   wmctrl("-l")
+pub fn list_windows() -> Vec<window::Window> {
+    let output_table = String::from_utf8(wmctrl("-l").stdout)
+        .unwrap();
+
+    let mut windows = Vec::new();
+
+    for row in output_table.lines() {
+        let mut columns: Vec<&str> = row.split(" ").collect();
+
+        if columns[3] == " " {
+            columns.remove(3);
+        }
+
+        let title_substrings = columns[3..].to_vec();
+
+        let mut title = String::from("");
+        title_substrings.iter().for_each(|&e| title += e);
+
+        windows.push(window::Window::new(String::from(columns[0]),
+            String::from(columns[1]),
+            String::from(columns[2]),
+            title
+        ));
+    }
+
+    windows
 }
 
 /// This equals the -m flag
@@ -29,35 +54,40 @@ pub fn switch_desktop(desktop: &str) -> std::process::Output {
 }
 
 /// window: the window id or a string that matches part of the title
-pub fn activate_window(window: &str) -> std::process::Output {
-    let args = format!("-a {}", parse_window(window));
+pub fn activate_window(window: &window::Window) -> std::process::Output {
+    let args = format!("-a {}", window.get());
     wmctrl(&args)
 }
 
-pub fn close_window(window: &str) -> std::process::Output {
-    let args = format!("-c {}", parse_window(window));
+pub fn close_window(window: &window::Window) -> std::process::Output {
+    let args = format!("-c {}", window.get());
     wmctrl(&args)
 }
 
 /// Moves the window to the current desktop and raises it
-pub fn move_window_to_current_desktop(window: &str) -> std::process::Output {
-    let args = format!("-R {}", parse_window(window));
+pub fn move_window_to_current_desktop(window: &window::Window) -> std::process::Output {
+    let args = format!("-R {}", window.get());
     wmctrl(&args)
 }
 
 /// Moves the window to the specified desktop
-pub fn move_window(window: &str, desktop: &str) -> std::process::Output {
-    let args = format!("-r {} -t {}", parse_window(window), desktop);
+pub fn move_window(window: &window::Window, desktop: &str) -> std::process::Output {
+    let args = format!("-r {} -t {}", window.get(), desktop);
     wmctrl(&args)
 }
 
-pub fn move_and_resize(window: &str, transformation: transformation::Transformation) -> std::process::Output {
-    let args = format!("-r {} -e {}", parse_window(window), transformation);
+pub fn move_and_resize(window: &window::Window, transformation: transformation::Transformation) -> std::process::Output {
+    let args = format!("-r {} -e {}", window.get(), transformation);
     wmctrl(&args)
 }
 
-pub fn change_state(window: &str, state: state::State) -> std::process::Output {
-    let args = format!("-r {} -b {}", parse_window(window), state);
+pub fn change_state(window: &window::Window, state: state::State) -> std::process::Output {
+    let args = format!("-r {} -b {}", window.get(), state);
+    wmctrl(&args)
+}
+
+pub fn set_long_title(window: &window::Window, title: &str) -> std::process::Output {
+    let args = format!("-r {} -N {}", window.get(), title);
     wmctrl(&args)
 }
 
@@ -67,14 +97,6 @@ fn wmctrl(args: &str) -> std::process::Output {
         .arg(format!("wmctrl {}", args))
         .output()
         .expect(&format!("failed to execute 'wmctrl {}'", args))
-}
-
-fn parse_window(window: &str) -> String {
-    if window.starts_with("0x") {
-        format!("{} -i", window)
-    } else {
-        window.to_owned()
-    }
 }
 
 #[cfg(test)]
