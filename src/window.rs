@@ -72,7 +72,7 @@ impl Window {
         wmctrl(&args);
     }
 
-    pub fn close(&self) {
+    pub fn close(self) {
         let args = format!("-c {}", self.get());
         wmctrl(&args);
     }
