@@ -1,3 +1,14 @@
+/// A wrapper for the `wmctrl` command line interface.
+/// 
+/// # Examples 
+/// 
+/// Move firefox to desktop 2 and make it fullscreen
+/// ```
+/// let mut win: Window = wmctrl::get_windows().into_iter().find(|w| w.title().contains("firefox")).unwrap();
+/// win.set_desktop("1");
+/// win.change_state(State::new(state::Action::Add, state::Property::Fullscreen));
+/// ```
+
 use std::process::Command;
 use std::process::Output;
 
@@ -11,12 +22,22 @@ pub use transformation::Transformation;
 pub use state::State;
 pub use window::Window;
 
-
+/// Print help
+/// 
+/// This function is the equivalent of `wmctrl -h`.
+/// /// # Examples
+/// 
+/// ```
+/// println!("{}", String::from_utf8(wmctrl::help().stdout).unwrap());
+/// ```
 pub fn help() -> Output {
     wmctrl("-h")
 }
 
-pub fn list_windows() -> Vec<Window> {
+/// Get windows managed by the window manager
+/// 
+/// This function is the equivalent of `wmctrl -l -G`.
+pub fn get_windows() -> Vec<Window> {
     let output_table = String::from_utf8(wmctrl("-l -G").stdout)
         .unwrap();
 
@@ -28,32 +49,59 @@ pub fn list_windows() -> Vec<Window> {
     windows
 }
 
-/// This equals the -m flag
+/// Show information about the window manager and about the environment
+/// 
+/// This function is the equivalent of `wmctrl -m`.
+/// 
+/// # Examples
+/// 
+/// ```
+/// println!("{}", String::from_utf8(wmctrl::show_wm_information().stdout).unwrap());
+/// ```
 pub fn show_wm_information() -> Output {
     wmctrl("-m")
 }
 
-/// This equals the -d flag
+/// List desktops. The current desktop is marked with an asterisk
+/// 
+/// This function is the equivalent of `wmctrl -d`.
+/// 
+/// # Examples
+/// 
+/// ```
+/// println!("{}", String::from_utf8(wmctrl::list_desktops().stdout).unwrap());
+/// ```
 pub fn list_desktops() -> Output {
     wmctrl("-d")
 }
+
 
 pub fn get_current_desktop() -> String {
     // TODO: Implement me
     String::from("Method not implemented!")
 }
 
-/// This equals the -s flag
-/// desktop usually means workspace in this context
+/// Switch to the specified desktop
+/// 
+/// This function is the equivalent of `wmctrl -s <DESK>`.
+/// 
+/// # Examples
+/// 
+/// ```
+/// wmctrl::switch_desktop("1");
+/// ```
 pub fn switch_desktop(desktop: &str) -> Output {
     wmctrl(&format!("-s {}", desktop))
 }
 
+/// Change the number of desktops
+/// 
+/// This function is the equivalent of `wmctrl -n <NUM>`.
 pub fn set_desktop_count(count: u8) -> Output {
     wmctrl(&format!("-n {}", count))
 }
 
-pub fn wmctrl(args: &str) -> Output {
+pub(crate) fn wmctrl(args: &str) -> Output {
      Command::new("sh")
         .arg("-c")
         .arg(format!("wmctrl {}", args))
