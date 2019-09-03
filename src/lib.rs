@@ -136,7 +136,7 @@ fn parse_row(row: &str) -> Window {
     // Remove last whitespace
     title.pop();
 
-    Window::new(Some(id), desktop, client_machine, title, t)
+    Window::new(id, desktop, client_machine, title, t)
 }
 
 #[cfg(test)]
