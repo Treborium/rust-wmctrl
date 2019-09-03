@@ -9,11 +9,11 @@ pub enum Action {
 
 impl fmt::Display for Action {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       match *self {
-           Action::Remove => write!(f, "remove"),
-           Action::Add => write!(f, "add"),
-           Action::Toggle => write!(f, "toggle"),
-       }
+        match *self {
+            Action::Remove => write!(f, "remove"),
+            Action::Add => write!(f, "add"),
+            Action::Toggle => write!(f, "toggle"),
+        }
     }
 }
 
@@ -34,19 +34,19 @@ pub enum Property {
 
 impl fmt::Display for Property {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       match *self {
-           Property::Modal => write!(f, "modal"),
-           Property::Sticky => write!(f, "sticky"),
-           Property::MaximizedVert => write!(f, "maximized_vert"),
-           Property::MaximizedHorz => write!(f, "maximized_horz"),
-           Property::Shaded => write!(f, "shaded"),
-           Property::SkipTaskbar => write!(f, "skip_taskbar"),
-           Property::SkipPager => write!(f, "skip_pager"),
-           Property::Hidden => write!(f, "hidden"),
-           Property::Fullscreen => write!(f, "fullscreen"),
-           Property::Above => write!(f, "above"),
-           Property::Below => write!(f, "below"),
-       }
+        match *self {
+            Property::Modal => write!(f, "modal"),
+            Property::Sticky => write!(f, "sticky"),
+            Property::MaximizedVert => write!(f, "maximized_vert"),
+            Property::MaximizedHorz => write!(f, "maximized_horz"),
+            Property::Shaded => write!(f, "shaded"),
+            Property::SkipTaskbar => write!(f, "skip_taskbar"),
+            Property::SkipPager => write!(f, "skip_pager"),
+            Property::Hidden => write!(f, "hidden"),
+            Property::Fullscreen => write!(f, "fullscreen"),
+            Property::Above => write!(f, "above"),
+            Property::Below => write!(f, "below"),
+        }
     }
 }
 

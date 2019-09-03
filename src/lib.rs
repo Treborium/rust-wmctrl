@@ -1,32 +1,29 @@
 /// A wrapper for the `wmctrl` command line interface.
-/// 
-/// # Examples 
-/// 
+///
+/// # Examples
+///
 /// Move firefox to desktop 2 and make it fullscreen
 /// ```
 /// let mut win: Window = wmctrl::get_windows().into_iter().find(|w| w.title().contains("firefox")).unwrap();
 /// win.set_desktop("1");
 /// win.change_state(State::new(state::Action::Add, state::Property::Fullscreen));
 /// ```
-
 use std::process::Command;
 use std::process::Output;
 
-
-// pub mod transformation;
-pub mod transformation;
 pub mod state;
+pub mod transformation;
 pub mod window;
 
-pub use transformation::Transformation;
 pub use state::State;
+pub use transformation::Transformation;
 pub use window::Window;
 
 /// Print help
-/// 
+///
 /// This function is the equivalent of `wmctrl -h`.
 /// /// # Examples
-/// 
+///
 /// ```
 /// println!("{}", String::from_utf8(wmctrl::help().stdout).unwrap());
 /// ```
@@ -35,11 +32,10 @@ pub fn help() -> Output {
 }
 
 /// Get windows managed by the window manager
-/// 
+///
 /// This function is the equivalent of `wmctrl -l -G`.
 pub fn get_windows() -> Vec<Window> {
-    let output_table = String::from_utf8(wmctrl("-l -G").stdout)
-        .unwrap();
+    let output_table = String::from_utf8(wmctrl("-l -G").stdout).unwrap();
 
     let mut windows = Vec::new();
     for row in output_table.lines() {
@@ -50,11 +46,11 @@ pub fn get_windows() -> Vec<Window> {
 }
 
 /// Show information about the window manager and about the environment
-/// 
+///
 /// This function is the equivalent of `wmctrl -m`.
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```
 /// println!("{}", String::from_utf8(wmctrl::show_wm_information().stdout).unwrap());
 /// ```
@@ -63,11 +59,11 @@ pub fn show_wm_information() -> Output {
 }
 
 /// List desktops. The current desktop is marked with an asterisk
-/// 
+///
 /// This function is the equivalent of `wmctrl -d`.
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```
 /// println!("{}", String::from_utf8(wmctrl::list_desktops().stdout).unwrap());
 /// ```
@@ -75,18 +71,17 @@ pub fn list_desktops() -> Output {
     wmctrl("-d")
 }
 
-
 pub fn get_current_desktop() -> String {
     // TODO: Implement me
     String::from("Method not implemented!")
 }
 
 /// Switch to the specified desktop
-/// 
+///
 /// This function is the equivalent of `wmctrl -s <DESK>`.
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```
 /// wmctrl::switch_desktop("1");
 /// ```
@@ -95,14 +90,14 @@ pub fn switch_desktop(desktop: &str) -> Output {
 }
 
 /// Change the number of desktops
-/// 
+///
 /// This function is the equivalent of `wmctrl -n <NUM>`.
 pub fn set_desktop_count(count: u8) -> Output {
     wmctrl(&format!("-n {}", count))
 }
 
 pub(crate) fn wmctrl(args: &str) -> Output {
-     Command::new("sh")
+    Command::new("sh")
         .arg("-c")
         .arg(format!("wmctrl {}", args))
         .output()
@@ -113,7 +108,8 @@ fn parse_row(row: &str) -> Window {
     let columns = row.split(" ").collect::<Vec<&str>>();
 
     // Filter empty strings out
-    let columns = columns.into_iter()
+    let columns = columns
+        .into_iter()
         .filter(|&e| !e.is_empty())
         .collect::<Vec<&str>>();
 
@@ -135,9 +131,9 @@ fn parse_row(row: &str) -> Window {
     let mut title = String::from("");
     let title_substrings: Vec<&str> = columns[7..].to_vec();
 
-    title_substrings.into_iter()
+    title_substrings
+        .into_iter()
         .for_each(|e| title += format!("{} ", e).as_str());
-    
     // Remove last whitespace
     title.pop();
 

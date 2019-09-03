@@ -1,11 +1,11 @@
-use crate::transformation::Transformation;
 use crate::state::State;
+use crate::transformation::Transformation;
 
 use super::wmctrl;
 
-/// A type representing windows managed by the window manager. 
+/// A type representing windows managed by the window manager.
 /// An instance is only obtainable through `wmctrl::list_windows()`
-/// 
+///
 /// **Note**: Since `wmctrl` fails silently there is no warranty that the actions performed on the window will be successful.
 /// This is a flaw in the command line tool itself and not of this crate.
 pub struct Window {
@@ -17,8 +17,20 @@ pub struct Window {
 }
 
 impl Window {
-    pub(super) fn new(id: String, desktop: String, client_machine: String, title: String, transformation: Transformation) -> Window {
-        Window { id, desktop, client_machine, title, transformation }
+    pub(super) fn new(
+        id: String,
+        desktop: String,
+        client_machine: String,
+        title: String,
+        transformation: Transformation,
+    ) -> Window {
+        Window {
+            id,
+            desktop,
+            client_machine,
+            title,
+            transformation,
+        }
     }
 
     fn get(&self) -> String {
@@ -26,7 +38,7 @@ impl Window {
     }
 
     /// Set the title of the window
-    /// 
+    ///
     /// This method is the equivalent of `wmctrl -r <WIN> -N <STR>`.
     pub fn set_title(&mut self, title: &str) {
         self.title = String::from(title);
@@ -36,7 +48,7 @@ impl Window {
     }
 
     /// Set the icon title (short title) of the window
-    /// 
+    ///
     /// This method is the equivalent of `wmctrl -r <WIN> -I <STR>`.
     pub fn set_icon_title(&self, title: &str) {
         let args = format!("-r {} -I {}", self.get(), title);
@@ -44,7 +56,7 @@ impl Window {
     }
 
     /// Set both the title and icon title of the window
-    /// 
+    ///
     /// This method is the equivalent of `wmctrl -r <WIN> -T <STR>`.
     pub fn set_both_title(&mut self, title: &str) {
         self.title = String::from(title);
@@ -54,12 +66,12 @@ impl Window {
     }
 
     /// Change the state of the window
-    /// 
+    ///
     /// Using this method it's possible for example to make the window maximized, minimized, or fullscreen.
     /// This method is the equivalent of `wmctrl -r <WIN> -b <STARG>`.
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// let win = wmctrl::list_windows().get(0).unwrap();
     /// win.change_state(State::new(state::Action::Add, state::Property::Fullscreen));
@@ -70,11 +82,11 @@ impl Window {
     }
 
     /// Resize and move the window around the desktop
-    /// 
+    ///
     /// This method is the equivalent of `wmctrl -r <WIN> -e <MVARG>`.
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// let win = wmctrl::list_windows().get(0).unwrap();
     /// // This will move the window to the top left corner and resize it to 960x540
@@ -88,7 +100,7 @@ impl Window {
     }
 
     /// Move the window to the specified desktop
-    /// 
+    ///
     /// This method is the equivalent of `wmctrl -r <WIN> -t <DESK>`.
     pub fn set_desktop(&mut self, desktop: &str) {
         self.desktop = String::from(desktop);
@@ -98,7 +110,7 @@ impl Window {
     }
 
     /// Move the window to the current desktop and raise it
-    /// 
+    ///
     /// This method is the equivalent of `wmctrl -R <WIN>`.
     pub fn activate(&mut self) {
         self.desktop = super::get_current_desktop();
@@ -108,7 +120,7 @@ impl Window {
     }
 
     /// Activate the window by switching to its desktop and raising it
-    /// 
+    ///
     /// This method is the equivalent of `wmctrl -a <WIN>`.
     pub fn raise(&self) {
         let args = format!("-a {}", self.get());
@@ -116,7 +128,7 @@ impl Window {
     }
 
     /// Close the window gracefully
-    /// 
+    ///
     /// This method is the equivalent of `wmctrl -c <WIN>`.
     pub fn close(self) {
         let args = format!("-c {}", self.get());

@@ -11,12 +11,22 @@ pub struct Transformation {
 
 impl Transformation {
     pub fn new(x: u16, y: u16, width: u16, height: u16) -> Transformation {
-        Transformation { gravity: 0, x, y, width, height }
+        Transformation {
+            gravity: 0,
+            x,
+            y,
+            width,
+            height,
+        }
     }
 }
 
 impl fmt::Display for Transformation {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{},{},{},{},{}", self.gravity, self.x, self.y, self.width, self.height)
+        write!(
+            f,
+            "{},{},{},{},{}",
+            self.gravity, self.x, self.y, self.width, self.height
+        )
     }
 }
