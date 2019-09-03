@@ -108,6 +108,10 @@ pub fn set_both_title(window: &Window, title: &str) -> Output {
     wmctrl(&args)
 }
 
+pub fn set_desktop_count(count: u8) -> Output {
+    wmctrl(&format!("-n {}", count))
+}
+
 fn wmctrl(args: &str) -> Output {
      Command::new("sh")
         .arg("-c")
