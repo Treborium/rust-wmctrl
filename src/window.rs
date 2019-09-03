@@ -1,7 +1,7 @@
 use crate::state::State;
 use crate::transformation::Transformation;
-
-use super::wmctrl;
+use crate::utils::wmctrl;
+use crate::utils::get_current_desktop;
 
 /// A type representing windows managed by the window manager.
 /// An instance is only obtainable through `wmctrl::list_windows()`
@@ -113,7 +113,7 @@ impl Window {
     ///
     /// This method is the equivalent of `wmctrl -R <WIN>`.
     pub fn activate(&mut self) {
-        self.desktop = super::get_current_desktop();
+        self.desktop = get_current_desktop();
 
         let args = format!("-R {}", self.get());
         wmctrl(&args);

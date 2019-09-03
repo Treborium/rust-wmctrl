@@ -8,16 +8,18 @@
 /// win.set_desktop("1");
 /// win.change_state(State::new(state::Action::Add, state::Property::Fullscreen));
 /// ```
-use std::process::Command;
 use std::process::Output;
 
 pub mod state;
 pub mod transformation;
 pub mod window;
+pub mod utils;
 
 pub use state::State;
 pub use transformation::Transformation;
 pub use window::Window;
+
+use utils::wmctrl;
 
 /// Print help
 ///
@@ -71,10 +73,6 @@ pub fn list_desktops() -> Output {
     wmctrl("-d")
 }
 
-pub fn get_current_desktop() -> String {
-    // TODO: Implement me
-    String::from("Method not implemented!")
-}
 
 /// Switch to the specified desktop
 ///
@@ -94,14 +92,6 @@ pub fn switch_desktop(desktop: &str) -> Output {
 /// This function is the equivalent of `wmctrl -n <NUM>`.
 pub fn set_desktop_count(count: u8) -> Output {
     wmctrl(&format!("-n {}", count))
-}
-
-pub(crate) fn wmctrl(args: &str) -> Output {
-    Command::new("sh")
-        .arg("-c")
-        .arg(format!("wmctrl {}", args))
-        .output()
-        .expect(&format!("failed to execute 'wmctrl {}'", args))
 }
 
 fn parse_row(row: &str) -> Window {
