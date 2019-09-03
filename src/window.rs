@@ -16,7 +16,7 @@ impl Window {
         Window { id, desktop, client_machine, title, transformation }
     }
 
-    pub(super) fn get(&self) -> String {
+    fn get(&self) -> String {
         format!("{} -i", self.id)
     }
 
