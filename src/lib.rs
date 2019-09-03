@@ -17,28 +17,12 @@ pub fn help() -> Output {
 }
 
 pub fn list_windows() -> Vec<Window> {
-    let output_table = String::from_utf8(wmctrl("-l").stdout)
+    let output_table = String::from_utf8(wmctrl("-l -G").stdout)
         .unwrap();
 
     let mut windows = Vec::new();
-
     for row in output_table.lines() {
-        let mut columns: Vec<&str> = row.split(" ").collect();
-
-        if columns[3] == " " {
-            columns.remove(3);
-        }
-
-        let title_substrings = columns[3..].to_vec();
-
-        let mut title = String::from("");
-        title_substrings.iter().for_each(|&e| title += e);
-
-        windows.push(Window::new(String::from(columns[0]),
-            String::from(columns[1]),
-            String::from(columns[2]),
-            title
-        ));
+        windows.push(parse_row(row))
     }
 
     windows
@@ -118,6 +102,41 @@ fn wmctrl(args: &str) -> Output {
         .arg(format!("wmctrl {}", args))
         .output()
         .expect(&format!("failed to execute 'wmctrl {}'", args))
+}
+
+fn parse_row(row: &str) -> Window {
+    let columns = row.split(" ").collect::<Vec<&str>>();
+
+    // Filter empty strings out
+    let columns = columns.into_iter()
+        .filter(|&e| !e.is_empty())
+        .collect::<Vec<&str>>();
+
+    let (x, y, w, h) = (
+        columns[2].parse::<u16>().unwrap(),
+        columns[3].parse::<u16>().unwrap(),
+        columns[4].parse::<u16>().unwrap(),
+        columns[5].parse::<u16>().unwrap(),
+    );
+
+    let t = Transformation::new(x, y, w, h);
+
+    let (id, desktop, client_machine) = (
+        columns[0].to_owned(),
+        columns[1].to_owned(),
+        columns[6].to_owned(),
+    );
+
+    let mut title = String::from("");
+    let title_substrings: Vec<&str> = columns[7..].to_vec();
+
+    title_substrings.into_iter()
+        .for_each(|e| title += format!("{} ", e).as_str());
+    
+    // Remove last whitespace
+    title.pop();
+
+    Window::new(Some(id), desktop, client_machine, title, t)
 }
 
 #[cfg(test)]
