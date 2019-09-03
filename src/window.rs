@@ -51,7 +51,6 @@ impl Window {
 
         let args = format!("-r {} -T {}", self.get(), title);
         wmctrl(&args);
-
     }
 
     /// Change the state of the window
@@ -122,5 +121,9 @@ impl Window {
     pub fn close(self) {
         let args = format!("-c {}", self.get());
         wmctrl(&args);
+    }
+
+    pub fn title(&self) -> &String {
+        &self.title
     }
 }
