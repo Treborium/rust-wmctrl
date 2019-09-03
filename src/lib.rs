@@ -7,9 +7,9 @@ pub mod transformation;
 pub mod state;
 pub mod window;
 
-use transformation::Transformation;
-use state::State;
-use window::Window;
+pub use transformation::Transformation;
+pub use state::State;
+pub use window::Window;
 
 
 pub fn help() -> Output {
