@@ -9,9 +9,15 @@ pub fn show_wm_information() -> std::process::Output {
     wmctrl("-m")
 }
 
-/// This equald the -d flag
+/// This equals the -d flag
 pub fn list_desktops() -> std::process::Output {
     wmctrl("-d")
+}
+
+/// This equals the -s flag
+/// desktop usually means workspace in this context
+pub fn switch_desktop(desktop: &str) -> std::process::Output {
+    wmctrl(&format!("-s {}", desktop))
 }
 
 fn wmctrl(args: &str) -> std::process::Output {
