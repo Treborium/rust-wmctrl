@@ -38,65 +38,22 @@ pub fn list_desktops() -> Output {
     wmctrl("-d")
 }
 
+pub fn get_current_desktop() -> String {
+    // TODO: Implement me
+    String::from("Method not implemented!")
+}
+
 /// This equals the -s flag
 /// desktop usually means workspace in this context
 pub fn switch_desktop(desktop: &str) -> Output {
     wmctrl(&format!("-s {}", desktop))
 }
 
-/// window: the window id or a string that matches part of the title
-pub fn activate_window(window: &Window) -> Output {
-    let args = format!("-a {}", window.get());
-    wmctrl(&args)
-}
-
-pub fn close_window(window: &Window) -> Output {
-    let args = format!("-c {}", window.get());
-    wmctrl(&args)
-}
-
-/// Moves the window to the current desktop and raises it
-pub fn move_window_to_current_desktop(window: &Window) -> Output {
-    let args = format!("-R {}", window.get());
-    wmctrl(&args)
-}
-
-/// Moves the window to the specified desktop
-pub fn move_window(window: &Window, desktop: &str) -> Output {
-    let args = format!("-r {} -t {}", window.get(), desktop);
-    wmctrl(&args)
-}
-
-pub fn move_and_resize(window: &Window, transformation: Transformation) -> Output {
-    let args = format!("-r {} -e {}", window.get(), transformation);
-    wmctrl(&args)
-}
-
-pub fn change_state(window: &Window, state: State) -> Output {
-    let args = format!("-r {} -b {}", window.get(), state);
-    wmctrl(&args)
-}
-
-pub fn set_long_title(window: &Window, title: &str) -> Output {
-    let args = format!("-r {} -N {}", window.get(), title);
-    wmctrl(&args)
-}
-
-pub fn set_short_title(window: &Window, title: &str) -> Output {
-    let args = format!("-r {} -I {}", window.get(), title);
-    wmctrl(&args)
-}
-
-pub fn set_both_title(window: &Window, title: &str) -> Output {
-    let args = format!("-r {} -T {}", window.get(), title);
-    wmctrl(&args)
-}
-
 pub fn set_desktop_count(count: u8) -> Output {
     wmctrl(&format!("-n {}", count))
 }
 
-fn wmctrl(args: &str) -> Output {
+pub fn wmctrl(args: &str) -> Output {
      Command::new("sh")
         .arg("-c")
         .arg(format!("wmctrl {}", args))
