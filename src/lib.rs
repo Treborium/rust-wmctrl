@@ -4,7 +4,7 @@
 ///
 /// Move firefox to desktop 2 and make it fullscreen
 /// ```
-/// let mut win: Window = wmctrl::get_windows().into_iter().find(|w| w.title().contains("firefox")).unwrap();
+/// let mut win: Window = utils::find_window_by_title("firefox").unwrap();
 /// win.set_desktop("1");
 /// win.change_state(State::new(state::Action::Add, state::Property::Fullscreen));
 /// ```
@@ -95,12 +95,8 @@ pub fn set_desktop_count(count: u8) -> Output {
 }
 
 fn parse_row(row: &str) -> Window {
-    let columns = row.split(" ").collect::<Vec<&str>>();
-
-    // Filter empty strings out
-    let columns = columns
-        .into_iter()
-        .filter(|&e| !e.is_empty())
+    let columns = row.split(" ")
+        .filter(|e| !e.is_empty())
         .collect::<Vec<&str>>();
 
     let (x, y, w, h) = (
