@@ -3,6 +3,7 @@ use std::process::Output;
 
 use crate::window::Window;
 
+// This function is only visible crate internally
 pub(crate) fn wmctrl(args: &str) -> Output {
     Command::new("sh")
         .arg("-c")
@@ -11,10 +12,12 @@ pub(crate) fn wmctrl(args: &str) -> Output {
         .expect(&format!("failed to execute 'wmctrl {}'", args))
 }
 
+/// Get the currently active Desktop
 pub fn get_current_desktop() -> String {
     let output = String::from_utf8(super::list_desktops().stdout).unwrap();
 
-    let columns = output.lines()
+    let columns = output
+        .lines()
         .find(|line| line.contains("*"))
         .unwrap()
         .split(" ")
@@ -24,8 +27,13 @@ pub fn get_current_desktop() -> String {
     String::from(columns[0])
 }
 
-pub fn find_window_by_title(title: &str) -> Option<Window> {
-    super::get_windows()
-        .into_iter()
-        .find(|w| w.title().contains(title))
+/// Find a window by title inside a Vector
+///
+/// This method is case insensitive
+pub fn find_window_by_title<'a>(windows: &'a Vec<Window>, title: &str) -> Option<&'a Window> {
+    windows.into_iter().find(|w| {
+        w.title()
+            .to_lowercase()
+            .contains(title.to_lowercase().as_str())
+    })
 }
