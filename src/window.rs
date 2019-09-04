@@ -130,11 +130,21 @@ impl Window {
     /// Close the window gracefully
     ///
     /// This method is the equivalent of `wmctrl -c <WIN>`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let win: Window = wmctrl::get_windows().remove(0);
+    /// win.close();
+    /// ```
+    /// 
+    /// It's necessary to remove the window from the list since it becomes unusable after closing it.
     pub fn close(self) {
         let args = format!("-c {}", self.get());
         wmctrl(&args);
     }
 
+    /// Get the title immutably
     pub fn title(&self) -> &String {
         &self.title
     }
