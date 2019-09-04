@@ -1,10 +1,10 @@
-use wmctrl::print_windows;
-
+use wmctrl::*;
 
 fn main() {
-    let output = wmctrl::print_windows();
-    println!("wmctrl says: {}", 
-        String::from_utf8(output.stdout)
-        .expect("Could not parse the output of the command")
-    );
+    let windows = wmctrl::get_windows();
+    let win = wmctrl::utils::find_window_by_title(&windows, "brave");
+    let desktops = desktop::list_desktops();
+
+    println!("Full title: {}", win.unwrap().title());
+
 }
