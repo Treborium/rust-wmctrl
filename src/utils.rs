@@ -12,21 +12,6 @@ pub(crate) fn wmctrl(args: &str) -> Output {
         .expect(&format!("failed to execute 'wmctrl {}'", args))
 }
 
-/// Get the currently active Desktop
-pub fn get_current_desktop() -> String {
-    let output = String::from_utf8(super::list_desktops().stdout).unwrap();
-
-    let columns = output
-        .lines()
-        .find(|line| line.contains("*"))
-        .unwrap()
-        .split(" ")
-        .filter(|column| !column.is_empty())
-        .collect::<Vec<&str>>();
-
-    String::from(columns[0])
-}
-
 /// Find a window by title inside a Vector
 ///
 /// This method is case insensitive

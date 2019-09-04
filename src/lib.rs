@@ -16,6 +16,7 @@ pub mod state;
 pub mod transformation;
 pub mod window;
 pub mod utils;
+pub mod desktop;
 
 pub use state::State;
 pub use transformation::Transformation;
@@ -64,40 +65,6 @@ pub fn get_windows() -> Vec<Window> {
 /// ```
 pub fn show_wm_information() -> Output {
     wmctrl("-m")
-}
-
-/// List desktops. The current desktop is marked with an asterisk
-///
-/// This function is the equivalent of `wmctrl -d`.
-///
-/// # Examples
-///
-/// ```
-/// println!("{}", String::from_utf8(wmctrl::list_desktops().stdout).unwrap());
-/// ```
-pub fn list_desktops() -> Output {
-    wmctrl("-d")
-}
-
-
-/// Switch to the specified desktop
-///
-/// This function is the equivalent of `wmctrl -s <DESK>`.
-///
-/// # Examples
-///
-/// ```
-/// wmctrl::switch_desktop("1");
-/// ```
-pub fn switch_desktop(desktop: &str) -> Output {
-    wmctrl(&format!("-s {}", desktop))
-}
-
-/// Change the number of desktops
-///
-/// This function is the equivalent of `wmctrl -n <NUM>`.
-pub fn set_desktop_count(count: u8) -> Output {
-    wmctrl(&format!("-n {}", count))
 }
 
 fn parse_row(row: &str) -> Window {

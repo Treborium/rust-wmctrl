@@ -1,7 +1,7 @@
 use crate::state::State;
 use crate::transformation::Transformation;
 use crate::utils::wmctrl;
-use crate::utils::get_current_desktop;
+use crate::desktop::get_current_desktop;
 
 /// A type representing windows managed by the window manager.
 /// An instance is only obtainable through `wmctrl::list_windows()`
