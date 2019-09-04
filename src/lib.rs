@@ -4,9 +4,11 @@
 ///
 /// Move firefox to desktop 2 and make it fullscreen
 /// ```
-/// let mut win: Window = utils::find_window_by_title("firefox").unwrap();
-/// win.set_desktop("1");
-/// win.change_state(State::new(state::Action::Add, state::Property::Fullscreen));
+/// let windows = wmctrl::get_windows();
+/// let mut firefox = utils::find_window_by_title(&windows, "firefox").unwrap();
+/// 
+/// firefox.set_desktop("1");
+/// firefox.change_state(State::new(state::Action::Add, state::Property::Fullscreen));
 /// ```
 use std::process::Output;
 
@@ -36,6 +38,10 @@ pub fn help() -> Output {
 /// Get windows managed by the window manager
 ///
 /// This function is the equivalent of `wmctrl -l -G`.
+/// 
+/// You should never fetch a second `Vec<Window>` while the first one is still in use!
+/// This will lead to inconsistencies between the two Vectors and most likely to incorrect behavior of your code.
+/// It is advised to get a `Vec<Window>` once at the beginning of the program and operate on it.
 pub fn get_windows() -> Vec<Window> {
     let output_table = String::from_utf8(wmctrl("-l -G").stdout).unwrap();
 
