@@ -1,6 +1,6 @@
 use std::fmt;
 
-/// An enum listing all available actions that may be applied to a `wmctrl::Window`
+/// Actions that may be applied to a `wmctrl::Window`
 pub enum Action {
     Remove,
     Add,
@@ -17,7 +17,7 @@ impl fmt::Display for Action {
     }
 }
 
-/// An enum listing all available properties that may be applied to a `wmctrl::Window`
+/// Properties that may be applied to a `wmctrl::Window`
 pub enum Property {
     Modal,
     Sticky,
@@ -50,7 +50,7 @@ impl fmt::Display for Property {
     }
 }
 
-/// A simple type holding information about the new state of a `wmctrl::Window`.
+/// Holds information about the new state of a `wmctrl::Window`.
 pub struct State {
     action: Action,
     property: Property,

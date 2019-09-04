@@ -4,30 +4,33 @@
 ///
 /// Move firefox to desktop 2 and make it fullscreen
 /// ```
-/// let windows = wmctrl::get_windows();
+/// let windows = get_windows();
 /// let mut firefox = utils::find_window_by_title(&windows, "firefox").unwrap();
 /// 
 /// firefox.set_desktop("1");
-/// firefox.change_state(State::new(state::Action::Add, state::Property::Fullscreen));
+/// firefox.change_state(State::new(Action::Add, Property::Fullscreen));
 /// ```
 use std::process::Output;
 
-pub mod state;
-pub mod transformation;
-pub mod window;
-pub mod utils;
 pub mod desktop;
+pub mod utils;
 
-pub use state::State;
+mod transformation;
+mod window;
+mod state;
+
 pub use transformation::Transformation;
 pub use window::Window;
+pub use state::State;
+pub use state::Action;
+pub use state::Property;
 
 use utils::wmctrl;
 
 /// Print help
 ///
 /// This function is the equivalent of `wmctrl -h`.
-/// /// # Examples
+/// # Examples
 ///
 /// ```
 /// println!("{}", String::from_utf8(wmctrl::help().stdout).unwrap());

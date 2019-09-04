@@ -4,7 +4,7 @@ use crate::utils::wmctrl;
 use crate::desktop::get_current_desktop;
 
 /// A type representing windows managed by the window manager.
-/// An instance is only obtainable through `wmctrl::list_windows()`
+/// An instance is only obtainable through `wmctrl::get_windows()`
 ///
 /// **Note**: Since `wmctrl` fails silently there is no warranty that the actions performed on the window will be successful.
 /// This is a flaw in the command line tool itself and not of this crate.
@@ -73,8 +73,9 @@ impl Window {
     /// # Examples
     ///
     /// ```
-    /// let win = wmctrl::list_windows().get(0).unwrap();
-    /// win.change_state(State::new(state::Action::Add, state::Property::Fullscreen));
+    /// let win = wmctrl::get_windows().get(0).unwrap();
+    /// // Make the window fullscreen
+    /// win.change_state(wmctrl::State::new(wmctrl::Action::Add, wmctrl::Property::Fullscreen));
     /// ```
     pub fn change_state(&self, state: State) {
         let args = format!("-r {} -b {}", self.get(), state);
@@ -88,7 +89,7 @@ impl Window {
     /// # Examples
     ///
     /// ```
-    /// let win = wmctrl::list_windows().get(0).unwrap();
+    /// let win = wmctrl::get_windows().get(0).unwrap();
     /// // This will move the window to the top left corner and resize it to 960x540
     /// win.transform(wmctrl::Transformation::new(0, 0, 960, 540));
     /// ```
@@ -134,11 +135,10 @@ impl Window {
     /// # Examples
     ///
     /// ```
+    /// // We need to move the window out of the vector so there is no reference left
     /// let win: Window = wmctrl::get_windows().remove(0);
     /// win.close();
     /// ```
-    /// 
-    /// It's necessary to remove the window from the list since it becomes unusable after closing it.
     pub fn close(self) {
         let args = format!("-c {}", self.get());
         wmctrl(&args);

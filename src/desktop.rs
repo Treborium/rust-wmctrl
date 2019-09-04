@@ -9,7 +9,7 @@ use super::wmctrl;
 /// # Examples
 ///
 /// ```
-/// println!("{}", String::from_utf8(wmctrl::list_desktops().stdout).unwrap());
+/// println!("{}", String::from_utf8(desktop::list_desktops().stdout).unwrap());
 /// ```
 pub fn list_desktops() -> Output {
     wmctrl("-d")
@@ -22,7 +22,7 @@ pub fn list_desktops() -> Output {
 /// # Examples
 ///
 /// ```
-/// wmctrl::switch_desktop("1");
+/// desktop::switch_desktop("1");
 /// ```
 pub fn switch_desktop(desktop: &str) -> Output {
     wmctrl(&format!("-s {}", desktop))
