@@ -4,8 +4,8 @@
 ///
 /// Move firefox to desktop 2 and make it fullscreen
 /// ```
-/// let windows = get_windows();
-/// let mut firefox = utils::find_window_by_title(&windows, "firefox").unwrap();
+/// let mut windows = get_windows();
+/// let mut firefox = utils::find_window_by_title_mut(&mut windows, "firefox").unwrap();
 /// 
 /// firefox.set_desktop("1");
 /// firefox.change_state(State::new(Action::Add, Property::Fullscreen));
