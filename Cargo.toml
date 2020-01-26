@@ -7,7 +7,7 @@ readme = "README.md"
 keywords = ["wmctrl", "window", "manager", "wm", "linux"]
 categories = ["api-bindings", "command-line-interface", "os::unix-apis", "os"]
 license = "GPL-3.0-or-later"
-documentation = ""
+documentation = "https://docs.rs/wmctrl/latest/wmctrl/"
 
 version = "0.1.3"
 authors = ["Robert Fuchs <RobertFuchs97@gmail.com>"]
