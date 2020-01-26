@@ -7,7 +7,7 @@ Add `wmctrl` to your dependencies in your `Cargo.toml`:
 
 ```toml
 [dependencies]
-wmctrl = "0.1.3"
+wmctrl = "0.1.4"
 ```
 
 If you want the latest build use this GitHub repository as your uplink:
