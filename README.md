@@ -30,14 +30,14 @@ Find a window based on the title:
 
 ```Rust
 let windows = wmctrl::get_windows();
-let firefox = wmctrl::utils::find_window_by_title(&windows, "Firefox").unwrap();
+let firefox = wmctrl::utils::find_window_by_title(&windows, "Firefox")?;
 println!("{}", firefox);
 ```
 
 Resize and move a window to the specified coordinates:
 
 ``` Rust
-let win = wmctrl::get_windows().get(0).unwrap();
+let win = wmctrl::get_windows().get(0)?;
 // This will move the window to the top left corner and resize it to 960x540
 win.transform(wmctrl::Transformation::new(0, 0, 960, 540));
 ``` 
@@ -53,7 +53,7 @@ win.close();
 Make the window fullscreen: 
 
 ```Rust
-let win = wmctrl::get_windows().get(0).unwrap();
+let win = wmctrl::get_windows().get(0)?;
 // Make the window fullscreen
 win.change_state(wmctrl::State::new(wmctrl::Action::Add, wmctrl::Property::Fullscreen));
 ```
