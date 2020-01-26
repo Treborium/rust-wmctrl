@@ -1,3 +1,5 @@
+use std::fmt;
+
 use crate::state::State;
 use crate::transformation::Transformation;
 use crate::utils::wmctrl;
@@ -147,5 +149,16 @@ impl Window {
     /// Get the title immutably
     pub fn title(&self) -> &String {
         &self.title
+    }
+}
+
+
+impl fmt::Display for Window {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "id={}, title={}, desktop={}, client machine={}, transformation={}",
+            self.id, self.title, self.desktop, self.client_machine, self.transformation
+        )
     }
 }
