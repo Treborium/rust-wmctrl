@@ -4,7 +4,7 @@ description = "A wrapper for the command line tool wmctrl written in Rust"
 repository = "https://github.com/Treborium/rust-wmctrl"
 
 readme = "README.md"
-keywords = ["wmctrl", "window manager", "wm", "linux"]
+keywords = ["wmctrl", "window", "manager", "wm", "linux"]
 categories = ["api-bindings", "command-line-interface", "os::unix-apis", "os"]
 license = "GNU GPLv3"
 
