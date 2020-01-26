@@ -41,9 +41,9 @@ pub fn get_current_desktop() -> String {
 
     let columns = output
         .lines()
-        .find(|line| line.contains("*"))
+        .find(|line| line.contains('*'))
         .unwrap()
-        .split(" ")
+        .split(' ')
         .filter(|column| !column.is_empty())
         .collect::<Vec<&str>>();
 

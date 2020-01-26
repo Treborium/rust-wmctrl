@@ -9,14 +9,14 @@ pub(crate) fn wmctrl(args: &str) -> Output {
         .arg("-c")
         .arg(format!("wmctrl {}", args))
         .output()
-        .expect(&format!("failed to execute 'wmctrl {}'", args))
+        .unwrap_or_else(|_| panic!("failed to execute 'wmctrl {}'", args))
 }
 
 /// Find a window by title inside a Vector and return a reference of the entry
 ///
 /// This method is case insensitive
-pub fn find_window_by_title<'a>(windows: &'a Vec<Window>, title: &str) -> Option<&'a Window> {
-    windows.into_iter().find(|w| {
+pub fn find_window_by_title<'a>(windows: &'a [Window], title: &str) -> Option<&'a Window> {
+    windows.iter().find(|w| {
         w.title()
             .to_lowercase()
             .contains(title.to_lowercase().as_str())
@@ -30,7 +30,7 @@ pub fn find_window_by_title_mut<'a>(
     windows: &'a mut Vec<Window>,
     title: &str,
 ) -> Option<&'a mut Window> {
-    windows.into_iter().find(|w| {
+    windows.iter_mut().find(|w| {
         w.title()
             .to_lowercase()
             .contains(title.to_lowercase().as_str())

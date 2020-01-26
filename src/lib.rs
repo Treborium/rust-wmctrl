@@ -72,7 +72,7 @@ pub fn show_wm_information() -> Output {
 
 fn parse_row(row: &str) -> Window {
     let columns = row
-        .split(" ")
+        .split(' ')
         .filter(|e| !e.is_empty())
         .collect::<Vec<&str>>();
 
