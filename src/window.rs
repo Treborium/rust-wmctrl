@@ -75,7 +75,7 @@ impl Window {
     /// # Examples
     ///
     /// ```
-    /// let win = wmctrl::get_windows().get(0).unwrap();
+    /// let win = wmctrl::get_windows().get(0)?;
     /// // Make the window fullscreen
     /// win.change_state(wmctrl::State::new(wmctrl::Action::Add, wmctrl::Property::Fullscreen));
     /// ```
@@ -91,7 +91,7 @@ impl Window {
     /// # Examples
     ///
     /// ```
-    /// let win = wmctrl::get_windows().get(0).unwrap();
+    /// let win = wmctrl::get_windows().get(0)?;
     /// // This will move the window to the top left corner and resize it to 960x540
     /// win.transform(wmctrl::Transformation::new(0, 0, 960, 540));
     /// ```

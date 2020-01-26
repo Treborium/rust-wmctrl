@@ -33,7 +33,7 @@ use utils::wmctrl;
 /// # Examples
 ///
 /// ```
-/// println!("{}", String::from_utf8(wmctrl::help().stdout).unwrap());
+/// println!("{}", String::from_utf8(wmctrl::help().stdout)?);
 /// ```
 pub fn help() -> Output {
     wmctrl("-h")
@@ -64,7 +64,7 @@ pub fn get_windows() -> Vec<Window> {
 /// # Examples
 ///
 /// ```
-/// println!("{}", String::from_utf8(wmctrl::show_wm_information().stdout).unwrap());
+/// println!("{}", String::from_utf8(wmctrl::show_wm_information().stdout)?);
 /// ```
 pub fn show_wm_information() -> Output {
     wmctrl("-m")
