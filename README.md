@@ -1,6 +1,23 @@
 # Wmctrl Wrapper 
 A wrapper for the command line tool wmctrl written in Rust
 
+## Dependencies
+
+[wmctrl](https://www.freedesktop.org/wiki/Software/wmctrl/) needs to be installed: 
+
+```shell
+# Ubuntu
+sudo apt install wmctrl
+
+# Arch Linux
+sudo pacman -S wmctrl
+
+# Fedora 
+dnf install -y wmctrl
+
+# You get the idea
+```
+
 ## Usage
 
 Add `wmctrl` to your dependencies in your `Cargo.toml`:
@@ -10,7 +27,7 @@ Add `wmctrl` to your dependencies in your `Cargo.toml`:
 wmctrl = "0.1.4"
 ```
 
-If you want the latest build use this GitHub repository as your uplink:
+If you want the latest build use the GitHub repository as your uplink:
 ```toml
 [dependencies]
 wmctrl = { git = "https://github.com/Treborium/rust-wmctrl" }
