@@ -18,7 +18,7 @@ wmctrl = { git = "https://github.com/Treborium/rust-wmctrl" }
 
 ## Examples
 
-Please refer to the [documentation]() for detailed information. 
+Please refer to the [documentation](https://docs.rs/wmctrl/latest/wmctrl/) for detailed information. 
 
 If you want to copy & paste the examples below you _need to use_ the following import statement: 
 
