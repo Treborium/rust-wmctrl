@@ -26,7 +26,10 @@ pub fn find_window_by_title<'a>(windows: &'a Vec<Window>, title: &str) -> Option
 /// Find a window by title inside a Vector and return a mutable reference of the entry
 ///
 /// This method is case insensitive
-pub fn find_window_by_title_mut<'a>(windows: &'a mut Vec<Window>, title: &str) -> Option<&'a mut Window> {
+pub fn find_window_by_title_mut<'a>(
+    windows: &'a mut Vec<Window>,
+    title: &str,
+) -> Option<&'a mut Window> {
     windows.into_iter().find(|w| {
         w.title()
             .to_lowercase()

@@ -1,9 +1,9 @@
 use std::fmt;
 
+use crate::desktop::get_current_desktop;
 use crate::state::State;
 use crate::transformation::Transformation;
 use crate::utils::wmctrl;
-use crate::desktop::get_current_desktop;
 
 /// A type representing windows managed by the window manager.
 /// An instance is only obtainable through `wmctrl::get_windows()`
@@ -151,7 +151,6 @@ impl Window {
         &self.title
     }
 }
-
 
 impl fmt::Display for Window {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {

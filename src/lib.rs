@@ -6,7 +6,7 @@
 /// ```
 /// let mut windows = get_windows();
 /// let mut firefox = utils::find_window_by_title_mut(&mut windows, "firefox").unwrap();
-/// 
+///
 /// firefox.set_desktop("1");
 /// firefox.change_state(State::new(Action::Add, Property::Fullscreen));
 /// ```
@@ -15,15 +15,15 @@ use std::process::Output;
 pub mod desktop;
 pub mod utils;
 
+mod state;
 mod transformation;
 mod window;
-mod state;
 
-pub use transformation::Transformation;
-pub use window::Window;
-pub use state::State;
 pub use state::Action;
 pub use state::Property;
+pub use state::State;
+pub use transformation::Transformation;
+pub use window::Window;
 
 use utils::wmctrl;
 
@@ -42,7 +42,7 @@ pub fn help() -> Output {
 /// Get windows managed by the window manager
 ///
 /// This function is the equivalent of `wmctrl -l -G`.
-/// 
+///
 /// You should never fetch a second `Vec<Window>` while the first one is still in use!
 /// This will lead to inconsistencies between the two Vectors and most likely to incorrect behavior of your code.
 /// It is advised to get a `Vec<Window>` once at the beginning of the program and operate on it.
@@ -71,7 +71,8 @@ pub fn show_wm_information() -> Output {
 }
 
 fn parse_row(row: &str) -> Window {
-    let columns = row.split(" ")
+    let columns = row
+        .split(" ")
         .filter(|e| !e.is_empty())
         .collect::<Vec<&str>>();
 
