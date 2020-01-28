@@ -9,7 +9,7 @@ categories = ["api-bindings", "command-line-interface", "os::unix-apis", "os"]
 license = "GPL-3.0-or-later"
 documentation = "https://docs.rs/wmctrl/latest/wmctrl/"
 
-version = "0.1.4"
+version = "0.1.5"
 authors = ["Robert Fuchs <RobertFuchs97@gmail.com>"]
 edition = "2018"
 
