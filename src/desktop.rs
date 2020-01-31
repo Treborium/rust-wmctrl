@@ -9,6 +9,8 @@ use super::wmctrl;
 /// # Examples
 ///
 /// ```
+/// use wmctrl::desktop;
+///
 /// println!("{}", String::from_utf8(desktop::list_desktops().stdout).unwrap());
 /// ```
 pub fn list_desktops() -> Output {
@@ -22,6 +24,8 @@ pub fn list_desktops() -> Output {
 /// # Examples
 ///
 /// ```
+/// use wmctrl::desktop;
+///
 /// desktop::switch_desktop("1");
 /// ```
 pub fn switch_desktop(desktop: &str) -> Output {

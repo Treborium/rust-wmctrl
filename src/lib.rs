@@ -4,11 +4,14 @@
 ///
 /// Move firefox to desktop 2 and make it fullscreen
 /// ```
-/// let mut windows = get_windows();
+/// use wmctrl::{self, utils, State, Action, Property};
+///
+/// let mut windows = wmctrl::get_windows();
 /// let mut firefox = utils::find_window_by_title_mut(&mut windows, "firefox").unwrap();
 ///
 /// firefox.set_desktop("1");
 /// firefox.change_state(State::new(Action::Add, Property::Fullscreen));
+/// # Ok::<(), std::io::Error>(())
 /// ```
 use std::process::Output;
 
@@ -34,6 +37,7 @@ use utils::wmctrl;
 ///
 /// ```
 /// println!("{}", String::from_utf8(wmctrl::help().stdout)?);
+/// # Ok::<(), std::string::FromUtf8Error>(())
 /// ```
 pub fn help() -> Output {
     wmctrl("-h")
@@ -65,6 +69,7 @@ pub fn get_windows() -> Vec<Window> {
 ///
 /// ```
 /// println!("{}", String::from_utf8(wmctrl::show_wm_information().stdout)?);
+/// # Ok::<(), std::string::FromUtf8Error>(())
 /// ```
 pub fn show_wm_information() -> Output {
     wmctrl("-m")

@@ -1,6 +1,7 @@
 use std::fmt;
 
 /// A type holding the transformation properties of a `wmctrl::Window`
+#[derive(Debug)]
 pub struct Transformation {
     pub gravity: u16,
     pub x: u16,

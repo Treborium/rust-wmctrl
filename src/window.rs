@@ -1,5 +1,3 @@
-use std::fmt;
-
 use crate::desktop::get_current_desktop;
 use crate::state::State;
 use crate::transformation::Transformation;
@@ -10,6 +8,7 @@ use crate::utils::wmctrl;
 ///
 /// **Note**: Since `wmctrl` fails silently there is no warranty that the actions performed on the window will be successful.
 /// This is a flaw in the command line tool itself and not of this crate.
+#[derive(Debug)]
 pub struct Window {
     id: String,
     desktop: String,
@@ -75,7 +74,8 @@ impl Window {
     /// # Examples
     ///
     /// ```
-    /// let win = wmctrl::get_windows().get(0)?;
+    /// let windows = wmctrl::get_windows();
+    /// let win = &windows[0];
     /// // Make the window fullscreen
     /// win.change_state(wmctrl::State::new(wmctrl::Action::Add, wmctrl::Property::Fullscreen));
     /// ```
@@ -91,7 +91,8 @@ impl Window {
     /// # Examples
     ///
     /// ```
-    /// let win = wmctrl::get_windows().get(0)?;
+    /// let mut windows = wmctrl::get_windows();
+    /// let win = &mut windows[0];
     /// // This will move the window to the top left corner and resize it to 960x540
     /// win.transform(wmctrl::Transformation::new(0, 0, 960, 540));
     /// ```
@@ -137,6 +138,8 @@ impl Window {
     /// # Examples
     ///
     /// ```
+    /// use wmctrl::Window;
+    ///
     /// // We need to move the window out of the vector so there is no reference left
     /// let win: Window = wmctrl::get_windows().remove(0);
     /// win.close();
@@ -149,15 +152,5 @@ impl Window {
     /// Get the title immutably
     pub fn title(&self) -> &String {
         &self.title
-    }
-}
-
-impl fmt::Display for Window {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "id={}, title={}, desktop={}, client machine={}, transformation={}",
-            self.id, self.title, self.desktop, self.client_machine, self.transformation
-        )
     }
 }
