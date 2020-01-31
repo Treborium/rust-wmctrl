@@ -24,7 +24,7 @@ Add `wmctrl` to your dependencies in your `Cargo.toml`:
 
 ```toml
 [dependencies]
-wmctrl = "0.1.4"
+wmctrl = "0.1.6"
 ```
 
 If you want the latest build use the GitHub repository as your uplink:
@@ -47,14 +47,15 @@ Find a window based on the title:
 
 ```Rust
 let windows = wmctrl::get_windows();
-let firefox = wmctrl::utils::find_window_by_title(&windows, "Firefox")?;
+let firefox = wmctrl::utils::find_window_by_title(&windows, "Firefox").unwrap();
 println!("{}", firefox);
 ```
 
 Resize and move a window to the specified coordinates:
 
 ``` Rust
-let win = wmctrl::get_windows().get(0)?;
+let mut windows = wmctrl::get_windows();
+let win = &mut windows[0];
 // This will move the window to the top left corner and resize it to 960x540
 win.transform(wmctrl::Transformation::new(0, 0, 960, 540));
 ``` 
@@ -70,7 +71,8 @@ win.close();
 Make the window fullscreen: 
 
 ```Rust
-let win = wmctrl::get_windows().get(0)?;
+let windows = wmctrl::get_windows();
+let win = &windows[0];
 // Make the window fullscreen
 win.change_state(wmctrl::State::new(wmctrl::Action::Add, wmctrl::Property::Fullscreen));
 ```
