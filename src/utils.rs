@@ -1,7 +1,10 @@
+extern crate regex;
+
 use std::process::Command;
 use std::process::Output;
 
 use crate::window::Window;
+use regex::Regex;
 
 // This function is only visible crate internally
 pub(crate) fn wmctrl(args: &str) -> Output {
@@ -34,5 +37,24 @@ pub fn find_window_by_title_mut<'a>(
         w.title()
             .to_lowercase()
             .contains(title.to_lowercase().as_str())
+    })
+}
+
+/// Find a window by regexp inside a Vector and return a reference of the entry
+pub fn find_window_by_regexp<'a>(windows: &'a [Window], rexp: &str) -> Option<&'a Window> {
+    windows.iter().find(|w| {
+        let re = Regex::new(rexp).unwrap();
+        re.is_match(w.title())
+    })
+}
+
+/// Find a window by regexp inside a Vector and return a mutable reference of the entry
+pub fn find_window_by_regexp_mut<'a>(
+    windows: &'a mut Vec<Window>,
+    rexp: &str,
+) -> Option<&'a mut Window> {
+    windows.iter_mut().find(|w| {
+        let re = Regex::new(rexp).unwrap();
+        re.is_match(w.title())
     })
 }
