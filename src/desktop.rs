@@ -1,3 +1,5 @@
+//! Desktop related functions.
+
 use std::process::Output;
 
 use super::wmctrl;

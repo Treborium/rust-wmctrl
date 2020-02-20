@@ -51,6 +51,9 @@ impl fmt::Display for Property {
 }
 
 /// Holds information about the new state of a `wmctrl::Window`.
+/// See [`Window`] for an example use case.
+/// 
+/// [`Window`]: struct.Window.html#method.change_state
 pub struct State {
     action: Action,
     property: Property,

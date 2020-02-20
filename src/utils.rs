@@ -1,3 +1,5 @@
+//! Utility functions
+
 extern crate regex;
 
 use std::process::Command;
