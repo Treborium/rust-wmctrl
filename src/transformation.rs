@@ -4,14 +4,14 @@ use std::fmt;
 #[derive(Debug)]
 pub struct Transformation {
     pub gravity: u16,
-    pub x: u16,
-    pub y: u16,
+    pub x: i16,
+    pub y: i16,
     pub width: u16,
     pub height: u16,
 }
 
 impl Transformation {
-    pub fn new(x: u16, y: u16, width: u16, height: u16) -> Transformation {
+    pub fn new(x: i16, y: i16, width: u16, height: u16) -> Transformation {
         Transformation {
             gravity: 0,
             x,
