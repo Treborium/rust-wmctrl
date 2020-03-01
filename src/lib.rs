@@ -82,8 +82,8 @@ fn parse_row(row: &str) -> Window {
         .collect::<Vec<&str>>();
 
     let (x, y, w, h) = (
-        columns[2].parse::<u16>().unwrap(),
-        columns[3].parse::<u16>().unwrap(),
+        columns[2].parse::<i16>().unwrap(),
+        columns[3].parse::<i16>().unwrap(),
         columns[4].parse::<u16>().unwrap(),
         columns[5].parse::<u16>().unwrap(),
     );
