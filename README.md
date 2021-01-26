@@ -1,4 +1,5 @@
 # Wmctrl Wrapper 
+
 A wrapper for the command line tool wmctrl written in Rust
 
 ## Dependencies
@@ -24,10 +25,11 @@ Add `wmctrl` to your dependencies in your `Cargo.toml`:
 
 ```toml
 [dependencies]
-wmctrl = "0.1.7"
+wmctrl = "0.1.8"
 ```
 
 If you want the latest build use the GitHub repository as your uplink:
+
 ```toml
 [dependencies]
 wmctrl = { git = "https://github.com/Treborium/rust-wmctrl" }
