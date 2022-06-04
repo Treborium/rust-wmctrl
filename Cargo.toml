@@ -13,9 +13,6 @@ version = "0.1.8"
 authors = ["Robert Fuchs <RobertFuchs97@gmail.com>"]
 edition = "2018"
 
-# This is a fork of Robert's WMCTRL Wrapper, mainly aimed at adding additional functionality.
-# https://github.com/dev11n/rust-wmctrl
-
 [lib]
 name = "wmctrl"
 path = "src/lib.rs"
