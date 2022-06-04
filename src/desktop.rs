@@ -55,3 +55,18 @@ pub fn get_current_desktop() -> String {
 
     String::from(columns[0])
 }
+
+// Get the name of the currently active Desktop
+pub fn get_current_desktop_name() -> String {
+    let output = String::from_utf8(list_desktops().stdout).unwrap();
+
+    let columns = output
+        .lines()
+        .find(|line| line.contains('*'))
+        .unwrap()
+        .split(' ')
+        .filter(|column| !column.is_empty())
+        .collect::<Vec<&str>>();
+
+    String::from(columns[8])
+}
