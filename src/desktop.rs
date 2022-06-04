@@ -42,7 +42,7 @@ pub fn set_desktop_count(count: u8) -> Output {
 }
 
 /// Get the currently active Desktop
-pub fn get_current_desktop() -> i32 {
+pub fn get_current_desktop() -> String {
     let output = String::from_utf8(list_desktops().stdout).unwrap();
 
     let columns = output
@@ -53,8 +53,7 @@ pub fn get_current_desktop() -> i32 {
         .filter(|column| !column.is_empty())
         .collect::<Vec<&str>>();
 
-    // Parse the string to an integer.
-    String::from(columns[0]).parse().unwrap()
+    String::from(columns[0])
 }
 
 // Get the name of the currently active Desktop
