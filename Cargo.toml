@@ -20,5 +20,9 @@ edition = "2018"
 name = "wmctrl"
 path = "src/lib.rs"
 
+#[[bin]]
+#name = "wmctrl"
+#path = "src/lib.rs"
+
 [dependencies]
 regex = "1.5.6"

@@ -43,6 +43,9 @@ pub fn help() -> Output {
     wmctrl("-h")
 }
 
+// /// Startup function if [bin] is uncommented inside of Cargo.toml.
+// pub fn main() { }
+
 /// Get windows managed by the window manager
 ///
 /// This function is the equivalent of `wmctrl -l -G`.

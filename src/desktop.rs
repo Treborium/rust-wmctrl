@@ -68,5 +68,5 @@ pub fn get_current_desktop_name() -> String {
         .filter(|column| !column.is_empty())
         .collect::<Vec<&str>>();
 
-    String::from(columns[14])
+    String::from(columns[8])
 }
